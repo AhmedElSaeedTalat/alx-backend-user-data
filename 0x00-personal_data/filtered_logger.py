@@ -4,7 +4,7 @@ from typing import List
 import re
 
 
-def filter_datum(fields: List, redaction: str, message: str, separator: str):
+def filter_datum(fields: List, redaction: str, message: str, separator: str) -> str:
     """ log message obfuscated """
     for i in fields:
         pattern = f'(?<={i}=).*?(?={separator})'
