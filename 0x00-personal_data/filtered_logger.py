@@ -6,5 +6,7 @@ import re
 
 def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
     """ log message obfuscated """
-    pattern = '|'.join(list(map(lambda i: f'(?<={i}=).*?(?={separator})', fields)))
-    return re.sub(pattern, redaction, message)
+    for i in fields:
+        message = re.sub(f'{i}=.*?(?={separator})',
+                         f'{i}={redaction}', message)
+    return message
