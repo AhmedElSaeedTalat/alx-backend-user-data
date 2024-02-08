@@ -3,8 +3,8 @@
 from typing import List
 import logging
 import re
-import mysql.connector
-import os
+from mysql import connector
+from os import environ
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -49,15 +49,15 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
+def get_db() -> connector.connection.MySQLConnection:
     """ return connector """
-    usr = os.getenv('PERSONAL_DATA_DB_USERNAME', "root")
-    ps = os.getenv('PERSONAL_DATA_DB_PASSWORD', "")
-    host = os.getenv('PERSONAL_DATA_DB_HOST', "localhost")
-    db = os.getenv('PERSONAL_DATA_DB_NAME')
-    connection = mysql.connector.connection.MySQLConnection(
-            user=usr,
-            password=ps,
+    user = environ.get('PERSONAL_DATA_DB_USERNAME', "root")
+    password = environ.get('PERSONAL_DATA_DB_PASSWORD', "")
+    host = environ.get('PERSONAL_DATA_DB_HOST', "localhost")
+    database = environ.get('PERSONAL_DATA_DB_NAME')
+    connection = connector.connection.MySQLConnection(
+            user=user,
+            password=password,
             host=host,
-            database=db)
+            database=database)
     return connection
