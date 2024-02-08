@@ -67,10 +67,18 @@ def main():
     """ main function to show data """
     connection = get_db()
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM users')
+    list_columns = ['name', 'email', 'phone', 'ssn',
+                    'password', 'ip', 'last_login', 'user_agent']
+    statement = 'SELECT name, email, phone, ssn, password, ip, \
+last_login, user_agent FROM users'
+    cursor.execute(statement)
     logger = get_logger()
+    msg = ''
     for row in cursor:
-        logger.info(row)
+        for index, field in enumerate(row):
+            msg += f'{list_columns[index]}={field};'
+        logger.info(msg)
+        msg = ''
 
 
 if __name__ == "__main__":
