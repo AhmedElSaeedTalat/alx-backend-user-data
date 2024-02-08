@@ -6,6 +6,6 @@ from typing import ByteString
 
 def hash_password(password: str) -> ByteString:
     """ hash password function """
-    password = password.encode('utf-8')
+    password = password.encode()
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password, salt)
