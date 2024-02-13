@@ -16,5 +16,5 @@ class BasicAuth(Auth):
         elif not authorization_header.startswith('Basic '):
             return None
         pattern = r'(?<=Basic ).+'
-        match = re.match(pattern, authorization_header)
-        return match.groups()
+        match = re.findall(pattern, authorization_header)
+        return match[0]
