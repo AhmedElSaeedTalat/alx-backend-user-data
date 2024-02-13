@@ -1,8 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env pythion3
 """ BasicAuth to be used here """
 from .auth import Auth
 import re
 import base64
+from models.user import User
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -42,3 +44,16 @@ class BasicAuth(Auth):
         elif ':' not in decoded_base64_d:
             return (None, None)
         return tuple(decoded_base64_d.split(':'))
+
+    def user_object_from_credentials(self, user_email: str,
+                                     user_pwd: str) -> TypeVar('User'):
+        """ user_object_from_credentials """
+        if user_email is None or type(user_email) is not str:
+            return None
+        elif user_pwd is None or type(user_pwd) is not str:
+            return None
+        users = User.search({'email': user_email})
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
+        return None
