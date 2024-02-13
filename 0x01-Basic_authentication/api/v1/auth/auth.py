@@ -12,7 +12,13 @@ class Auth:
                 path: path to file
                 excluded_paths: path not inlcuded
         """
-        return False
+        if not path or not excluded_paths:
+            return True
+        modified_list = list(map(lambda i: i.strip('/'), excluded_paths))
+        modified_path = path.strip('/')
+        if modified_path in modified_list:
+            return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """ authentication header function """
