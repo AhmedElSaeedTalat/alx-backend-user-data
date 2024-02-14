@@ -3,6 +3,7 @@
 from .auth import Auth
 import re
 import base64
+from flask import jsonify
 from models.user import User
 from typing import TypeVar
 
@@ -57,3 +58,23 @@ class BasicAuth(Auth):
             if user.is_valid_password(user_pwd):
                 return user
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """ current user definition """
+        if not request:
+            return None
+        auth = request.headers['Authorization']
+        credentials = self.extract_base64_authorization_header(auth)
+        if not credentials:
+            return None
+        decode = self.decode_base64_authorization_header(credentials)
+        if not decode:
+            return None
+        decoded_credentials = self.extract_user_credentials(decode)
+        if not decoded_credentials:
+            return None
+        user = self.user_object_from_credentials(decoded_credentials[0],
+                                                 decoded_credentials[1])
+        if not user:
+            return None
+        return jsonify(user.__dict__)
