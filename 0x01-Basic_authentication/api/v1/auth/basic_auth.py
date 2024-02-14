@@ -44,7 +44,7 @@ class BasicAuth(Auth):
             return (None, None)
         elif ':' not in decoded_base64_d:
             return (None, None)
-        return tuple(decoded_base64_d.split(':'))
+        return tuple(decoded_base64_d.split(':', maxsplit=1))
 
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
