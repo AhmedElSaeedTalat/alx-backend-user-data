@@ -1,4 +1,4 @@
-#!/usr/bin/env pythion3
+#!/usr/bin/env python3
 """ BasicAuth to be used here """
 from .auth import Auth
 import re
