@@ -2,6 +2,7 @@
 """ BasicAuth to be used here """
 from .auth import Auth
 import uuid
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -17,7 +18,20 @@ class SessionAuth(Auth):
         return id
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
-        """ retrieve user id by session id """
+        """ retrieve user_id id by session id """
         if not session_id or type(session_id) is not str:
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """ return current user
+            Args
+                request: received request object
+        """
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+        user = User.search({'id': user_id})
+        if user:
+            return user[0]
+        else:
+            return None
