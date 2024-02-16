@@ -3,6 +3,7 @@
 from .auth import Auth
 import uuid
 from models.user import User
+from flask import jsonify
 
 
 class SessionAuth(Auth):
@@ -32,6 +33,6 @@ class SessionAuth(Auth):
         user_id = self.user_id_for_session_id(session_id)
         user = User.search({'id': user_id})
         if user:
-            return user[0]
+            return jsonify(user[0].to_json())
         else:
             return None
