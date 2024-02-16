@@ -33,6 +33,6 @@ class SessionAuth(Auth):
         user_id = self.user_id_for_session_id(session_id)
         user = User.search({'id': user_id})
         if user:
-            return jsonify(user[0].to_json())
+            return jsonify(user[0].__dict__)
         else:
             return None
