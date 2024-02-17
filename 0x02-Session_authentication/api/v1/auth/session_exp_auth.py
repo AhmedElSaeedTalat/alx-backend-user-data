@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ setting expiration class """
 from .session_auth import SessionAuth
 from os import getenv
