@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ user model """
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer
 Base = declarative_base()
 
