@@ -14,6 +14,7 @@ def _hash_password(password: str) -> bytes:
     return bcrypt.hashpw(password_encoded, salted)
 
 
+@property
 def _generate_uuid(self) -> str:
     """ generates uuid """
     return str(uuid4())
