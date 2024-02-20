@@ -56,3 +56,14 @@ class DB:
             return user
         else:
             raise NoResultFound
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """ updates user """
+        user = self.find_user_by(id=user_id)
+        for key, value in kwargs.items():
+            try:
+                getattr(User, key)
+            except AttributeError:
+                raise ValueError
+            setattr(user, key, value)
+        return None
