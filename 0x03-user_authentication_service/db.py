@@ -38,7 +38,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, *arg, **kwargs):
+    def find_user_by(self, **kwargs):
         """ find user """
         for key, val in kwargs.items():
             try:
