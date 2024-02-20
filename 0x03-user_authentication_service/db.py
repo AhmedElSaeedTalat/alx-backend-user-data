@@ -44,16 +44,15 @@ class DB:
         if not kwargs:
             raise InvalidRequestError
 
-        for key, val in kwargs.items():
-            try:
-                attribute = getattr(User, key)
-                user = self._session.query(User).filter(attribute == val)\
-                                                .first()
-            except AttributeError:
-                raise InvalidRequestError
+        try:
+            for key, value in kwargs.items():
+                user = self._session.query(User)\
+                           .filter(getattr(User, key) == value)\
+                           .first()
 
-            if user:
-                break
+        except AttributeError:
+            raise InvalidRequestError
+
         if user:
             return user
         else:
