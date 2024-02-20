@@ -41,6 +41,9 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict[str, Any]) -> User:
         """ find user """
+        if not kwargs:
+            raise InvalidRequestError
+
         for key, val in kwargs.items():
             try:
                 attribute = getattr(User, key)
